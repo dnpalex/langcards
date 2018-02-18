@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>FolderGridView.qml</file>
+        <file>CardsView.qml</file>
     </qresource>
 </RCC>
