@@ -4,7 +4,6 @@ import Qt.labs.platform 1.0
 
 GridView {
     id: gridView
-    anchors.fill: parent
     cellHeight: height / 4
     cellWidth: width / 4
 

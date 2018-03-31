@@ -2,17 +2,12 @@ import QtQuick 2.9
 import QtQuick.Controls 2.3
 
 SwipeView {
-    id: swipeView
-    anchors.fill: parent
+    id: root
+
+    property var model
 
     Repeater{
-        model: ListModel{
-            ListElement{name: "111"}
-            ListElement{name: "222"}
-            ListElement{name: "333"}
-            ListElement{name: "444"}
-            ListElement{name: "555"}
-        }
+        model: root.model
 
         Loader{
             active: SwipeView.isCurrentItem | SwipeView.isNextItem | SwipeView.isPreviousItem
@@ -25,7 +20,7 @@ SwipeView {
                     radius: 30
 
                     Text{
-                        text: name
+                        text: translation
                         anchors.centerIn: parent
                     }
                 }
