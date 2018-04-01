@@ -1,7 +1,13 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>FolderGridView.qml</file>
-        <file>CardsView.qml</file>
+        <file>CategoryGridView.qml</file>
+        <file>CardsSwipeView.qml</file>
+        <file>MainControlBar.qml</file>
+        <file>assets/icons/down-arrow.png</file>
+        <file>assets/icons/left-arrow.png</file>
+        <file>assets/icons/right-arrow.png</file>
+        <file>assets/icons/back.png</file>
+        <file>assets/icons/download.png</file>
     </qresource>
 </RCC>

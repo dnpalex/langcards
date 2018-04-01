@@ -11,6 +11,7 @@ class ModelsPlugin : public QQmlExtensionPlugin
 public:
 
     void registerTypes(const char *uri) override;
+
 };
 
 #endif // MODELSPLUGIN_H

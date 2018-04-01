@@ -24,9 +24,10 @@ COPIES += cpqmldir
 HEADERS += \
     wordsmodel.h \
     worditem.h \
-    modelsplugin.h
+    modelmanager.h \
+    modelplugins.h
 
 SOURCES += \
     wordsmodel.cpp \
-    worditem.cpp \
-    modelsplugin.cpp
+    modelmanager.cpp \
+    modelplugins.cpp

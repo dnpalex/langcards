@@ -1,19 +1,31 @@
 #include "wordsmodel.h"
 
-WordsModel::WordsModel() : itemList()
+
+
+WordsModel::WordsModel(QObject *parent) : QAbstractListModel(parent)
 {
-    itemList.append(new WordItem("word", "слово", this));
+
 }
 
-WordsModel::~WordsModel()
+void WordsModel::addItem(WordItem &&item) noexcept
 {
-    if (itemList.count() > 0) {
-        foreach (auto item, itemList) {
-            if (item) delete item;
-        }
-    }
+    itemList.append(item);
 }
 
+void WordsModel::addItem(const WordItem &item) noexcept
+{
+    itemList.append(item);
+}
+
+void WordsModel::addItems(QList<WordItem> &&list) noexcept
+{
+    itemList.append(list);
+}
+
+void WordsModel::addItems(const QList<WordItem> &list) noexcept
+{
+    itemList.append(list);
+}
 
 int WordsModel::rowCount(const QModelIndex &parent) const
 {
@@ -23,7 +35,7 @@ int WordsModel::rowCount(const QModelIndex &parent) const
 
 QVariant WordsModel::data(const QModelIndex &index, int role) const
 {
-    return itemList.count() > index.row() ? itemList.at(index.row())->data(role) : QVariant();
+    return itemList.count() > index.row() ? itemList.at(index.row()).data(role) : QVariant();
 }
 
 QHash<int, QByteArray> WordsModel::roleNames() const

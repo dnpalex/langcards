@@ -1,43 +1,71 @@
 #ifndef WORDITEM_H
 #define WORDITEM_H
 
-#include <QObject>
 #include <QVariant>
 #include <QHash>
 
-class WordItem : public QObject
+struct WordItem
 {
-    Q_OBJECT
-    Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged)
-    Q_PROPERTY(QString translation READ translation WRITE setTranslation NOTIFY translationChanged)
+    enum DATA_ROLES{WORD, PART_OF_SPEECH, CATEGORY, SUB_CATEGORY, LANGUAGE};
 
-public:
-    enum DATA_ROLES{TEXT=10000, TRANSLATION=10001};
-    Q_ENUM(DATA_ROLES)
+    QVariant data(const int& role) const noexcept{
+        switch(role){
+            case WORD:
+                return word;
+            case PART_OF_SPEECH:
+                return partOfSpeech;
+            case CATEGORY:
+                return category;
+            case SUB_CATEGORY:
+                return subCategory;
+            case LANGUAGE:
+                return language;
+            default:
+                return QVariant();
+        }
+    }
 
-    static QHash<int,QByteArray> roleNames() noexcept;
+    static QHash<int,QByteArray> roleNames() noexcept{
+        return {
+            {WORD, "word"},
+            {PART_OF_SPEECH, "partOfSpeech"},
+            {CATEGORY, "category"},
+            {SUB_CATEGORY, "subCategory"},
+            {LANGUAGE, "language"}
+        };
+    }
 
-    explicit WordItem(QObject *parent = nullptr);
-    explicit WordItem(const QString& text, const QString& translation, QObject *parent = nullptr);
+    WordItem(QString word, QString partOfSpeech, QString category, QString subCategory, QString language):
+        word(word), partOfSpeech(partOfSpeech), category(category), subCategory(subCategory), language(language) {}
+    /*WordItem(const WordItem& item): word(item.word),
+        partOfSpeech(item.partOfSpeech),
+        category(item.category),
+        subCategory(item.subCategory),
+        language(item.language)
 
-    QString text() const noexcept;
-    void setText(const QString &value) noexcept;
+    {}
+    WordItem(WordItem&& item): word(std::move(item.word)),
+        partOfSpeech(std::move(item.partOfSpeech)),
+        category(std::move(item.category)),
+        subCategory(std::move(item.subCategory)),
+        language(std::move(item.language))
+    {}
 
-    QString translation() const noexcept;
-    void setTranslation(const QString &value) noexcept;
+    WordItem& operator=(const WordItem& item){
+        this->word = item.word;
+        this->partOfSpeech = item.partOfSpeech;
+        this->category = item.category;
+        this->subCategory = item.subCategory;
+        this->language = item.language;
+        return *this;
+    }//*/
 
-    QVariant data(int role) const noexcept;
+    QString word;
+    QString partOfSpeech;
+    QString category;
+    QString subCategory;
+    QString language;
 
-signals:
-
-    void textChanged();
-    void translationChanged();
-
-public slots:
-
-private:
-    QString textVal;
-    QString translationVal;
 };
 
 

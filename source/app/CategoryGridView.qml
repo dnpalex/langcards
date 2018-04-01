@@ -1,25 +1,32 @@
 import QtQuick 2.9
-import Qt.labs.folderlistmodel 2.2
-import Qt.labs.platform 1.0
 
 GridView {
-    id: gridView
+    id: root
     cellHeight: height / 4
     cellWidth: width / 4
 
     signal cellClicked(string fileUrl)
 
-    model: FolderListModel{
-        id: dictionaryFileListModel
-        nameFilters: ["*.csv"]
-        folder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation) + "/LangCards"
+    model: ListModel{
+        ListElement{
+            name: "Noun"
+        }
+        ListElement{
+            name: "Verb"
+        }
+        ListElement{
+            name: "Adjective"
+        }
+        ListElement{
+            name: "Adverb"
+        }
     }
 
     delegate: Rectangle {
         border.width: 1
         border.color: "lightgray"
-        height: gridView.cellHeight
-        width: gridView.cellWidth
+        height: root.cellHeight
+        width: root.cellWidth
 
         Column{
             id: column
@@ -34,7 +41,7 @@ GridView {
                 fillMode: Image.PreserveAspectCrop
             }--*/
             Text {
-                text: fileName
+                text: name
                 anchors.horizontalCenter: parent.horizontalCenter
             }
         }
@@ -43,7 +50,7 @@ GridView {
             id: cellMArea
             anchors.fill: parent
             onClicked: {
-                gridView.cellClicked(dictionaryFileListModel.get(index,"fileURL"))
+                root.cellClicked(root.model.get(index).name)
                 //console.log(dictionaryFileListModel.get(index,"fileURL"))
             }
         }

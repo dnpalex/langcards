@@ -1,11 +1,11 @@
 TEMPLATE = subdirs
 
-SUBDIRS = app \
-	plugins
+SUBDIRS = app #\
+#	plugins
 
 app.subdir = source/app
-plugins.subdir = source/plugins
+#plugins.subdir = source/plugins
 
-app.depends = plugins
+#app.depends = plugins
 
 ROOT_DESTDIR = $$PWD/build

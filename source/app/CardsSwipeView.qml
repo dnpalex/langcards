@@ -20,8 +20,12 @@ SwipeView {
                     radius: 30
 
                     Text{
-                        text: translation
-                        anchors.centerIn: parent
+                        text: word
+                        anchors {horizontalCenter: parent.horizontalCenter; top: parent.top}
+                    }
+                    Text{
+                        text: partOfSpeech
+                        anchors {horizontalCenter: parent.horizontalCenter; bottom: parent.bottom}
                     }
                 }
             }

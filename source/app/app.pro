@@ -11,7 +11,11 @@ RESOURCES += qml.qrc
 
 DESTDIR = $$ROOT_DESTDIR
 
+#QML_IMPORT_PATH += ../../modelPlugins
+
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES +=
 
