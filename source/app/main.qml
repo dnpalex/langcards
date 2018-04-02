@@ -5,8 +5,8 @@ import QtQuick.Controls 2.3
 ApplicationWindow {
     id: root
     visible: true
-    width: 640
-    height: 480
+    width: 480
+    height: 720
     title: qsTr("Language cards")
 
     Drawer {
@@ -50,8 +50,8 @@ ApplicationWindow {
     }
 
     header: MainControlBar{
-        height: root.height / 8 > 40? 40 : root.height / 8;
-
+        height: root.height / 8;
+        buttonWidth: height
         leftAction: goBack
         rightAction: options
     }

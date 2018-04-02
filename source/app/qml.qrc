@@ -9,5 +9,7 @@
         <file>assets/icons/right-arrow.png</file>
         <file>assets/icons/back.png</file>
         <file>assets/icons/download.png</file>
+        <file>assets/icons/multimedia.png</file>
+        <file>SqliteApi.js</file>
     </qresource>
 </RCC>

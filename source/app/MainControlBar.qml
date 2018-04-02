@@ -6,17 +6,18 @@ Rectangle {
 
     property Action leftAction
     property Action rightAction
+    property int buttonWidth: width / 6
 
     Button{
         id: leftButton
         anchors {bottom: parent.bottom; top: parent.top; left: parent.left}
-        width: root.width / 8
+        width: buttonWidth
         action: leftAction
     }
     Button{
         id: rightButton
         anchors {bottom: parent.bottom; top: parent.top; right: parent.right}
-        width: root.width / 8
+        width: buttonWidth
         action: rightAction
     }
 }
