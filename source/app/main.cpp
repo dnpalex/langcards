@@ -3,6 +3,10 @@
 #include <QStandardPaths>
 #include <QIcon>
 
+#ifdef QT_DEBUG
+#include <QDebug>
+#endif
+
 int main(int argc, char *argv[])
 {
 #if defined(Q_OS_WIN)
@@ -19,10 +23,11 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    auto temp = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-    engine.setOfflineStoragePath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
-
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.setOfflineStoragePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
+#ifdef QT_DEBUG
+    qDebug() << engine.offlineStoragePath();
+#endif
+    engine.load(QUrl(QStringLiteral("qrc:/Main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
 

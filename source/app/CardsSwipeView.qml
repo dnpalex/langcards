@@ -3,6 +3,7 @@ import QtQuick.Controls 2.3
 
 SwipeView {
     id: root
+    orientation: Qt.Vertical
 
     property var model
 

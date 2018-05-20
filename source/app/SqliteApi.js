@@ -1,70 +1,71 @@
-function dbInit()
-{
-    var db = LocalStorage.openDatabaseSync("Activity_Tracker_DB", "", "Track exercise", 1000000)
-    try {
-        db.transaction(function (tx) {
-            tx.executeSql('CREATE TABLE IF NOT EXISTS trip_log (date text,trip_desc text,distance numeric)')
-        })
-    } catch (err) {
-        console.log("Error creating table in database: " + err)
-    };
-}
 
-function dbGetHandle()
-{
+function dbGetHandle() {
     try {
-        var db = LocalStorage.openDatabaseSync("Activity_Tracker_DB", "",
-                                               "Track exercise", 1000000)
+        var db = LocalStorage.openDatabaseSync("WordsDb", "", "", 1000000);
     } catch (err) {
-        console.log("Error opening database: " + err)
+        console.log("Error opening database: " + err);
+        throw err;
     }
-    return db
+    return db;
 }
 
-function dbInsert(Pdate, Pdesc, Pdistance)
-{
-    var db = dbGetHandle()
+function dbInsert(Ptable, Pvalues) {
+    var db = dbGetHandle();
     var rowid = 0;
     db.transaction(function (tx) {
-        tx.executeSql('INSERT INTO trip_log VALUES(?, ?, ?)',
-                      [Pdate, Pdesc, Pdistance])
-        var result = tx.executeSql('SELECT last_insert_rowid()')
-        rowid = result.insertId
-    })
+        tx.executeSql('INSERT INTO ' + Ptable + ' VALUES(?, ?, ?)', Pvalues);
+        var result = tx.executeSql('SELECT last_insert_rowid()');
+        rowid = result.insertId;
+    });
     return rowid;
 }
 
-function dbReadAll()
-{
-    var db = dbGetHandle()
+function dbReadAll(Ptable, Pfilter, Pcolumns) {
+    var db = dbGetHandle();
     db.transaction(function (tx) {
-        var results = tx.executeSql(
-                    'SELECT rowid,date,trip_desc,distance FROM trip_log order by rowid desc')
-        for (var i = 0; i < results.rows.length; i++) {
-            listModel.append({
-                                 id: results.rows.item(i).rowid,
-                                 checked: " ",
-                                 date: results.rows.item(i).date,
-                                 trip_desc: results.rows.item(i).trip_desc,
-                                 distance: results.rows.item(i).distance
-                             })
+        var columnString = '';
+        var valueArray = [];
+        for(var i = 0; i < Pfilter.count; i++) {
+            columnString.concat(' ' + Pfilter[i].column + ' = ? AND');
+            valueArray.push(Pfilter[i].value);
         }
-    })
-}
 
-function dbUpdate(Pdate, Pdesc, Pdistance, Prowid)
-{
-    var db = dbGetHandle()
+        var results = tx.executeSql(
+                    'SELECT ' + Pcolumns ? Pcolumns : '*'
+                    + ' FROM ' + Ptable
+                    + Pfilter ? ' WHERE ' + columnString + ' 1=1 ' : ''
+                    + ' ORDER BY rowid DESC', valueArray);
+        return results.rows;
+    });
+}
+function dbUpdate(Ptable, Prowid, PassignmentHash) {
+    var db = dbGetHandle();
     db.transaction(function (tx) {
+        var columnString = '';
+        var valueArray = [];
+        for(var i = 0; i < PassignmentHash.count; i++) {
+            columnString.concat(' ' + PassignmentHash[i].column + ' = ?');
+            valueArray.push(PassignmentHash[i].value);
+        }
+        valueArray.push(Prowid);
         tx.executeSql(
-                    'update trip_log set date=?, trip_desc=?, distance=? where rowid = ?', [Pdate, Pdesc, Pdistance, Prowid])
-    })
+                    'UPDATE ' + Ptable
+                    + ' SET ' + columnString
+                    + ' WHERE rowid = ?', valueArray);
+    });
 }
 
-function dbDeleteRow(Prowid)
-{
-    var db = dbGetHandle()
+function dbDelete(Ptable, Prowid) {
+    var db = dbGetHandle();
     db.transaction(function (tx) {
-        tx.executeSql('delete from trip_log where rowid = ?', [Prowid])
-    })
+        tx.executeSql('DELETE FROM ' + Ptable
+                      + ' WHERE rowid = ?', [Prowid]);
+    });
+}
+
+function dbExecSql(Psqlstring) {
+    var db = dbGetHandle();
+    db.transaction(function (tx) {
+        tx.executeSql(Psqlstring);
+    });
 }

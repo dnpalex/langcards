@@ -8,16 +8,18 @@ Rectangle {
     property Action rightAction
     property int buttonWidth: width / 6
 
-    Button{
+    Button {
         id: leftButton
-        anchors {bottom: parent.bottom; top: parent.top; left: parent.left}
+        anchors { bottom: parent.bottom; top: parent.top; left: parent.left }
         width: buttonWidth
         action: leftAction
+        visible: action.enabled
     }
-    Button{
+    Button {
         id: rightButton
-        anchors {bottom: parent.bottom; top: parent.top; right: parent.right}
+        anchors { bottom: parent.bottom; top: parent.top; right: parent.right }
         width: buttonWidth
         action: rightAction
+        visible: action.enabled
     }
 }

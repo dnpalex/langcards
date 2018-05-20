@@ -9,11 +9,47 @@ ApplicationWindow {
     height: 720
     title: qsTr("Language cards")
 
+    property bool leftDrawerInteractive: false
+    property bool rightDrawerInteractive: false
+
+
+
+    CategoryModel {
+        id: categoryModel
+    }
+
+    Component.onCompleted: {
+        console.log(CategoryModel.categoryLevel);
+        categoryModel.categoryLevel = 0;
+        console.log(CategoryModel.categoryLevel);
+    }
+
     Drawer {
         id: leftDrawer
         y: header.height
         width: root.width * 0.66
         height: root.height - header.height
+        edge: Qt.LeftEdge
+        interactive: root.leftDrawerInteractive
+
+        Rectangle {
+            color: "blue"
+            anchors.fill: parent
+        }
+    }
+
+    Drawer {
+        id: rightDrawer
+        y: header.height
+        width: root.width * 0.66
+        height: root.height - header.height
+        edge: Qt.RightEdge
+        interactive: root.rightDrawerInteractive
+
+        Rectangle {
+            color: "green"
+            anchors.fill: parent
+        }
     }
 
     Drawer {
@@ -31,8 +67,8 @@ ApplicationWindow {
 
     Action {
         id: goBack
-        icon {source: "assets/icons/back.png"; name: "Back";}
-
+        icon { source: "assets/icons/back.png"; name: "Back"; }
+        enabled: stackView.depth > 1
         onTriggered: {
             stackView.pop()
         }
@@ -40,47 +76,40 @@ ApplicationWindow {
 
     Action {
         id: options
-        icon {source: "assets/icons/download.png"; name: "Options";}
+        icon { source: "assets/icons/download.png"; name: "Options"; }
 
         onTriggered: {
             if (topDrawer.visible)
                 topDrawer.close();
-            else topDrawer.open();//*/
+            else topDrawer.open();
         }
     }
 
-    header: MainControlBar{
+    header: MainControlBar {
         height: root.height / 8;
         buttonWidth: height
         leftAction: goBack
-        rightAction: options
-    }
-
-    ListModel{
-        id: words
-        ListElement{ word: "Noun1"; partOfSpeech: "Noun"}
-        ListElement{ word: "Noun2"; partOfSpeech: "Noun"}
-        ListElement{ word: "Verb1"; partOfSpeech: "Verb"}
-        ListElement{ word: "Verb2"; partOfSpeech: "Verb"}
-        ListElement{ word: "Verb3"; partOfSpeech: "Verb"}
-        ListElement{ word: "Adjective1"; partOfSpeech: "Adjective"}
+        rightAction: options        
     }
 
     property CardsSwipeView cardsView: CardsSwipeView{
+        objectName: "CardsSwipeView"
 
     }
 
-    property CategoryGridView gridView: CategoryGridView{
-        //id: root
+    property CategoryGridView gridView: CategoryGridView {
+        objectName: "CategoryGridView"
+        model: CategoryModel.model
+
         onCellClicked: {
-            cardsView.model = words
+            categoryModel.categoryLevel = id
             stackView.push(cardsView)
         }
     }
 
-    StackView{
+    StackView {
         id: stackView
-        anchors { margins: 3; fill:parent}
+        anchors { margins: 3; fill: parent }
         initialItem: gridView
     }
 }

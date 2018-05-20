@@ -5,22 +5,7 @@ GridView {
     cellHeight: height / 4
     cellWidth: width / 4
 
-    signal cellClicked(string fileUrl)
-
-    model: ListModel{
-        ListElement{
-            name: "Noun"
-        }
-        ListElement{
-            name: "Verb"
-        }
-        ListElement{
-            name: "Adjective"
-        }
-        ListElement{
-            name: "Adverb"
-        }
-    }
+    signal cellClicked(int id)
 
     delegate: Rectangle {
         border.width: 1
@@ -50,7 +35,7 @@ GridView {
             id: cellMArea
             anchors.fill: parent
             onClicked: {
-                root.cellClicked(root.model.get(index).name)
+                root.cellClicked(root.model.get(index).id)
                 //console.log(dictionaryFileListModel.get(index,"fileURL"))
             }
         }
