@@ -1,2 +1,2 @@
 
-ROOT_DESTDIR=$$PWD
+ROOT_DESTDIR=$$PWD/../build-langcards

@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>Main.qml</file>
         <file>CategoryGridView.qml</file>
         <file>CardsSwipeView.qml</file>
         <file>MainControlBar.qml</file>
@@ -10,7 +9,7 @@
         <file>assets/icons/back.png</file>
         <file>assets/icons/download.png</file>
         <file>assets/icons/multimedia.png</file>
-        <file>SqliteApi.js</file>
         <file>CategoryModel.qml</file>
+        <file>Main.qml</file>
     </qresource>
 </RCC>

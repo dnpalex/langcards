@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     app.setWindowIcon(QIcon(QStringLiteral("qrc:/assets/icons/multimedia.png")));
 
     QQmlApplicationEngine engine;
-
+    engine.addImportPath("imports");
     engine.setOfflineStoragePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
 #ifdef QT_DEBUG
     qDebug() << engine.offlineStoragePath();
